@@ -25,11 +25,10 @@ def CheckAdminLogin(request):
             cursor.execute(q)
             record = tuple_to_dict.ParseDictMultipleRecord(cursor)
             print("Check", record)
-            if(len(record) == 0):
 
+            if(len(record) == 0):
                 return render(request, "AdminLogin.html", {'message': "Inavlid Adminid/Password"})
             else:
-
                 return render(request, "DashBoard.html", {'data': record[0]})
 
     except Exception as e:

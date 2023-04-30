@@ -84,7 +84,7 @@ WSGI_APPLICATION = 'djpaynrentapp.wsgi.application'
 
 DATABASES = {
 
-    'default': {'ENGINE': 'django.db.backends.mysql', 'NAME': 'djpaynrent', 'USER': 'root', 'PASSWORD': '123', 'HOST': 'localhost', 'PORT': '3306', }
+    'default': {'ENGINE': 'django.db.backends.mysql', 'NAME': 'djpaynrent', 'USER': 'root', 'PASSWORD': '112233', 'HOST': 'localhost', 'PORT': '3306', }
 
 }
 

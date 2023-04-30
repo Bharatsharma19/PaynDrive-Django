@@ -13,7 +13,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='SubCategory',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('category_id', models.CharField(default='', max_length=70)),
                 ('company_name', models.CharField(default='', max_length=70)),
                 ('subcategory_name', models.CharField(default='', max_length=70)),
@@ -24,7 +25,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Vehicle',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True,
+                 primary_key=True, serialize=False, verbose_name='ID')),
                 ('category_id', models.CharField(default='', max_length=100)),
                 ('subcategory_id', models.CharField(default='', max_length=100)),
                 ('model_year', models.CharField(default='', max_length=170)),

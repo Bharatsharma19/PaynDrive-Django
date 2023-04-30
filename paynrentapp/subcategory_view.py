@@ -7,19 +7,25 @@ from paynrentapp.serializers import SubCategorySerializers
 from paynrentapp.models import SubCategory
 from . import tuple_to_dict
 from django.views.decorators.clickjacking import xframe_options_exempt
+
+
 @xframe_options_exempt
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def SubCategoryInterface(request):
-    return render(request,"SubCategoryInterface.html")
+    return render(request, "SubCategoryInterface.html")
+
+
 @xframe_options_exempt
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def SubCategorySubmit(request):
     if request.method == 'POST':
         subcategory_serializers = SubCategorySerializers(data=request.data)
         if subcategory_serializers.is_valid():
             subcategory_serializers.save()
-            return render(request,"SubCategoryInterface.html",{'message':"Record Submitted Sucessfully"})
-        return render(request,"SubCategoryInterface.html",{'message':"Fail to Submit Record"})
+            return render(request, "SubCategoryInterface.html", {'message': "Record Submitted Sucessfully"})
+        return render(request, "SubCategoryInterface.html", {'message': "Fail to Submit Record"})
+
+
 '''
 @api_view(['GET','POST',])
 def DisplaySubCategory(request):
@@ -33,8 +39,10 @@ def DisplaySubCategory(request):
         print("Error",e)
         return render(request,"SubCategoryDisplay.html",{'data':{}})
 '''
-@xframe_options_exempt    
-@api_view(['GET','POST','DELETE'])
+
+
+@xframe_options_exempt
+@api_view(['GET', 'POST', 'DELETE'])
 def DisplaySubCategory(request):
     try:
         if request.method == 'GET':
@@ -43,51 +51,51 @@ def DisplaySubCategory(request):
             cursor = connection.cursor()
             cursor.execute(q)
             records = tuple_to_dict.ParseDictMultipleRecord(cursor)
-            print("xxxxxxxxxx",records)
-            
-
-            return render(request,"SubCategoryDisplay.html",{'data':records})
+            print("xxxxxxxxxx", records)
+            return render(request, "SubCategoryDisplay.html", {'data': records})
     except Exception as e:
-        print("Error",e)
-        return render(request,"SubCategoryDisplay.html",{'data':{}})
+        print("Error", e)
+        return render(request, "SubCategoryDisplay.html", {'data': {}})
 
 
 @xframe_options_exempt
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def DisplaySubCategoryJSON(request):
     try:
         if request.method == 'GET':
-            q="select * from paynrentapp_subcategory where category_id={0}".format(request.GET['cid'])
+            q = "select * from paynrentapp_subcategory where category_id={0}".format(
+                request.GET['cid'])
             print(q)
             cursor = connection.cursor()
             cursor.execute(q)
-            #print("xxxxxxxx",cursor.fetchall())
+            # print("xxxxxxxx",cursor.fetchall())
             record = tuple_to_dict.ParseDictMultipleRecord(cursor)
-            
-            return JsonResponse(record,safe=False)
+            return JsonResponse(record, safe=False)
     except Exception as e:
-        print("Error",e)
-        return JsonResponse([],safe=False)
-
+        print("Error", e)
+        return JsonResponse([], safe=False)
 
 
 @xframe_options_exempt
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def DisplaySubCategorybyId(request):
     try:
         if request.method == 'GET':
-            q = "select S.*,(select C.categoryname from paynrentapp_category C where C.id=S.category_id) as categoryname from paynrentapp_subcategory S where S.id={0}".format(request.GET['id'])
+            q = "select S.*,(select C.categoryname from paynrentapp_category C where C.id=S.category_id) as categoryname from paynrentapp_subcategory S where S.id={0}".format(
+                request.GET['id'])
             print(q)
             cursor = connection.cursor()
             cursor.execute(q)
             record = tuple_to_dict.ParseDictSingleRecord(cursor)
-            print("xxxxxxxx",record)
-            return render(request,"SubCategoryDisbyId.html",{'data':record})
+            print("xxxxxxxx", record)
+            return render(request, "SubCategoryDisbyId.html", {'data': record})
     except Exception as e:
-        print("Error",e)
-        return render(request,"SubCategoryDisbyId.html",{'data':record})
-@xframe_options_exempt    
-@api_view(['GET','POST','DELETE'])
+        print("Error", e)
+        return render(request, "SubCategoryDisbyId.html", {'data': record})
+
+
+@xframe_options_exempt
+@api_view(['GET', 'POST', 'DELETE'])
 def EditSubCategory(request):
     try:
         if request.method == 'GET':
@@ -101,21 +109,25 @@ def EditSubCategory(request):
             else:
                 subcategory = SubCategory.objects.get(pk=request.GET['id'])
                 subcategory.delete()
-            return redirect('/api/displaysubcategory') 
+            return redirect('/api/displaysubcategory')
     except Exception as e:
-        print("Error :" ,e)
-        return redirect('/api/displaysubcategory') 
+        print("Error :", e)
+        return redirect('/api/displaysubcategory')
+
+
 @xframe_options_exempt
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def DisplaySubCategoryIcon(request):
     try:
         if request.method == 'GET':
-            return render(request,"DisplaySubCategoryIcon.html",{'data':request.GET})
+            return render(request, "DisplaySubCategoryIcon.html", {'data': request.GET})
     except Exception as e:
-        print("Error : ",e)
-        return render(request,"DisplaySubCategoryIcon.html",{'data':[]})       
+        print("Error : ", e)
+        return render(request, "DisplaySubCategoryIcon.html", {'data': []})
+
+
 @xframe_options_exempt
-@api_view(['GET','POST','DELETE'])
+@api_view(['GET', 'POST', 'DELETE'])
 def SubCategoryIconSave(request):
     try:
         if request.method == 'POST':
@@ -124,5 +136,5 @@ def SubCategoryIconSave(request):
             subcategory.save()
             return redirect('/api/displaysubcategory')
     except Exception as e:
-        print("Error : ",e)
+        print("Error : ", e)
         return redirect('/api/displaysubcategory')

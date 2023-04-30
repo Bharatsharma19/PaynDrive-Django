@@ -8,9 +8,9 @@ from paynrentapp.models import Category
 from . import tuple_to_dict
 import os
 from django.views.decorators.clickjacking import xframe_options_exempt
+
+
 # Create your views here.
-
-
 @api_view(['GET', 'POST'])
 @xframe_options_exempt
 def CategoryInterface(request):
@@ -49,7 +49,7 @@ def DisplayCategory(request):
 def DisplayByCategoryID(request):
     try:
         if request.method == 'GET':
-            q = "select * from paynrentapp_category  where id={0}".format(
+            q = "select * from paynrentapp_category where id={0}".format(
                 request.GET['id'])
             cursor = connection.cursor()
             cursor.execute(q)
@@ -99,7 +99,6 @@ def DisplayCategoryIcon(request):
 def Category_Save_Icon(request):
     try:
         if request.method == 'POST':
-
             category = Category.objects.get(pk=request.POST['id'])
             category.icon = request.FILES['icon']
             category.save()
@@ -119,7 +118,6 @@ def DisplayCategoryJSON(request):
             list_category_serializer = CategorySerializer(
                 list_category, many=True)
             records = tuple_to_dict.ParseDict(list_category_serializer.data)
-
             return JsonResponse(records, safe=False)
     except Exception as e:
         print("Error:", e)

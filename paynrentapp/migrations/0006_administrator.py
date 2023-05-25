@@ -13,8 +13,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Administrator',
             fields=[
-                ('id', models.BigAutoField(auto_created=True,
-                 primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('adminname', models.CharField(default='', max_length=70)),
                 ('mobileno', models.CharField(default='', max_length=15)),
                 ('emailid', models.CharField(default='', max_length=150)),

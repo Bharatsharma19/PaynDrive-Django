@@ -20,13 +20,16 @@ def CheckAdminLogin(request):
             q = "select * from  paynrentapp_administrator  where (mobileno='{0}' or emailid='{0}') and password='{1}'".format(
                 request.GET['mobileno'], request.GET['password'])
 
+            print(q)
             cursor = connection.cursor()
             cursor.execute(q)
             record = tuple_to_dict.ParseDictMultipleRecord(cursor)
-
+            print("Check", record)
             if(len(record) == 0):
+
                 return render(request, "AdminLogin.html", {'message': "Inavlid Adminid/Password"})
             else:
+
                 return render(request, "DashBoard.html", {'data': record[0]})
 
     except Exception as e:

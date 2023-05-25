@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
 from django.contrib import admin
 from django.urls import path, re_path
 from paynrentapp import category_view
@@ -21,7 +20,6 @@ from paynrentapp import subcategory_view
 from paynrentapp import vehicle_view
 from paynrentapp import admin_login
 from paynrentapp import user_view
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^api/categoryinterface', category_view.CategoryInterface),
@@ -61,4 +59,6 @@ urlpatterns = [
     re_path(r'^api/uservehiclelist', user_view.PageUserVehicleList),
     re_path(r'^api/displayselectedvehicle', user_view.DisplaySelectedVehicle),
     re_path(r'^api/showvehiclelist', user_view.ShowVehicleList),
+    re_path(r'^api/setemailmobile', user_view.SetMobileAndEmail),
+
 ]

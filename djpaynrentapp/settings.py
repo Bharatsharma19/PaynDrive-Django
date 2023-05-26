@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-1sbzen)xd&iq&lub5mq*ll9!!g$@eoul%sl@l-)x16)az7!p$+
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
 CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',
 )
@@ -83,9 +85,7 @@ WSGI_APPLICATION = 'djpaynrentapp.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-
     'default': {'ENGINE': 'django.db.backends.mysql', 'NAME': 'djpaynrent', 'USER': 'root', 'PASSWORD': '112233', 'HOST': 'localhost', 'PORT': '3306', }
-
 }
 
 

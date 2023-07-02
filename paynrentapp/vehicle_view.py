@@ -21,8 +21,8 @@ def VehicleSubmit(request):
         vehicle_serializers = VehicleSerializers(data=request.data)
         if vehicle_serializers.is_valid():
             vehicle_serializers.save()
-            return render(request, "VehicleInterface.html", {'message': "Record Submitted Sucessfully"})
-        return render(request, "VehicleInterface.html", {'message': "Fail to Submit Record"})
+            return render(request, "VehicleInterface.html", {'message': "Record Submitted Sucessfully!"})
+        return render(request, "VehicleInterface.html", {'message': "Failed to Submit Record"})
 
 
 @xframe_options_exempt
@@ -32,13 +32,12 @@ def VehicleDisplay(request):
         if request.method == 'GET':
             q = "select V.*,(select C.categoryname from paynrentapp_category C where C.id=V.category_id) as categoryname, (select S.subcategory_name from paynrentapp_subcategory S where S.id=V.subcategory_id) as subcategoryname from paynrentapp_vehicle V"
 
-            #print(q)
+            # print(q)
 
             cursor = connection.cursor()
             cursor.execute(q)
-            records = tuple_to_dict.ParseDictMultipleRecord(cursor)
 
-            #print("xxxxxxxxxx", records)
+            records = tuple_to_dict.ParseDictMultipleRecord(cursor)
 
             return render(request, "VehicleDisplay.html", {'data': records})
     except Exception as e:
@@ -54,14 +53,14 @@ def VehicleDisplayById(request):
             q = "select V.*,(select C.categoryname from paynrentapp_category C where C.id=V.category_id) as categoryname, (select S.subcategory_name from paynrentapp_subcategory S where S.id=V.subcategory_id) as subcategoryname from paynrentapp_vehicle V where V.id={0}".format(
                 request.GET['id'])
 
-            #print(q)
+            # print(q)
 
             cursor = connection.cursor()
             cursor.execute(q)
             record = tuple_to_dict.ParseDictSingleRecord(cursor)
 
             #print("xxxxxxxxxx", record)
-            
+
             return render(request, "VehicleDisplayById.html", {'data': record})
     except Exception as e:
         print("Error : ", e)
@@ -92,6 +91,7 @@ def EditVehicle(request):
             else:
                 vehicle = Vehicle.objects.get(pk=request.GET['id'])
                 vehicle.delete()
+
             return redirect('/api/vehicledisplay')
     except Exception as e:
         print("Error :", e)
